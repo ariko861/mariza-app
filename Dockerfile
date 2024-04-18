@@ -1,6 +1,6 @@
 FROM python:3.10 as python_base
 
-RUN apt-get update && apt-get upgrade
+RUN apt-get update -y && apt-get upgrade -y
 
 RUN curl -sSL https://install.python-poetry.org | python3 -
 
