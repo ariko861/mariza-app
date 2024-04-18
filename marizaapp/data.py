@@ -2,18 +2,18 @@ import json
 
 import pandas as pd
 
-with open('datas/public_bath.json', 'r') as file:
-    data = json.load(file)
-    public_baths = pd.json_normalize(data['features'])
 
-public_baths['lon'] = public_baths['geometry.coordinates'].apply(lambda coordinates: coordinates[0])
-public_baths['lat'] = public_baths['geometry.coordinates'].apply(lambda coordinates: coordinates[1])
+# Make a dataframe and prepare it from path
+def prepare_dataframe_from_geojson(path: str) -> pd.DataFrame:
+    with open(path, 'r') as file:
+        data = json.load(file)
+        df = pd.json_normalize(data['features'])
+
+    df['lon'] = df['geometry.coordinates'].apply(lambda coordinates: coordinates[0])
+    df['lat'] = df['geometry.coordinates'].apply(lambda coordinates: coordinates[1])
 
 
-public_baths.fillna('', inplace=True)
-public_baths.drop(columns=['properties.@id', 'id', 'type', 'properties.amenity', 'geometry.type', 'properties.description:hu'], inplace=True)
-print(public_baths)
+    df.fillna('', inplace=True)
+    df.drop(columns=['properties.@id', 'id', 'type', 'properties.amenity', 'geometry.type'], inplace=True)
 
-data = {
-    'public_baths': public_baths,
-}
+    return df
