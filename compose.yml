@@ -1,0 +1,18 @@
+services:
+  mariza-app:
+    container_name: mariza-app
+    image: 'mariza-app'
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - 8765:8765
+    environment:
+      - MAPBOX_ACCESS_TOKEN=${MAPBOX_ACCESS_TOKEN}
+#    networks:
+#      - proxy
+
+
+#networks:
+#  proxy:
+#    external: true
